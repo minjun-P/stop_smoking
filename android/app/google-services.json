@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1086166118602",
+    "project_id": "hey-stop-smoking",
+    "storage_bucket": "hey-stop-smoking.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1086166118602:android:f3b935dd3f1663f0cac433",
+        "android_client_info": {
+          "package_name": "com.example.stop_smoking"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1086166118602-nfk8bsskejp6s28k09vbnndm0ro3pcsg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuwB9KODkqXU0swuMMWKpP9P-TDL2_1eE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1086166118602-nfk8bsskejp6s28k09vbnndm0ro3pcsg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
