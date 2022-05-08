@@ -1,59 +1,77 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:hive/hive.dart';
-import 'package:stop_smoking/pages/components/clock.dart';
+import 'package:stop_smoking/main_controller.dart';
 import 'package:stop_smoking/pages/game_page.dart';
 
-class CharacterPage extends StatelessWidget {
+import 'components/clock.dart';
+import 'components/clock_controller.dart';
+
+class CharacterPage extends GetView<MainController> {
   const CharacterPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          body: Center(
-            child: Column(
-              children: [
-                FutureBuilder<DocumentSnapshot<Map<String,dynamic>>>(
-                  future: FirebaseFirestore.instance.collection('users').doc(Hive.box('loginData').get('key')).get(),
-                  builder: (context, snapshot){
-                    if (snapshot.hasError){
-                      return Text('Errors');
-                    }
-                    if (snapshot.connectionState==ConnectionState.waiting){
-                      return CircularProgressIndicator(color: Colors.black,);
-                    }
-                    var data = snapshot.data!.data();
-                    return Text('안녕하세요 ${data!['name']}님 오늘도 화이팅이에요!',style: TextStyle(fontSize: 23,fontWeight: FontWeight.bold),);
-                  },
-                ),
-                TextButton(
-                  child: Text('눌러보실?'),
-                  onPressed: (){
-                    Get.to(()=>GamePage());
-                  },
-                ),
-                Image.asset('assets/character.png'),
-                FutureBuilder<DocumentSnapshot<Map<String,dynamic>>>(
-                  future: FirebaseFirestore.instance.collection('users').doc(Hive.box('loginData').get('key')).get(),
-                  builder: (context, snapshot){
-                    if (snapshot.hasError){
-                      return Text('Errors');
-                    }
-                    if (snapshot.connectionState==ConnectionState.waiting){
-                      return CircularProgressIndicator(color: Colors.black,);
-                    }
-                    var data = snapshot.data!.data();
-                    Timestamp timestamp = data!['createdAt'] as Timestamp;
-                    DateTime dateTime = timestamp.toDate();
-                    return Clock(dateTime: dateTime,smokingTimes: int.parse(data['smokingNum']),);
-                  },
-                ),
-              ],
-            ),
-          ),
+        backgroundColor: Colors.white,
+        body: CustomScrollView(
+          slivers: [
+            SliverAppBar(
+                backgroundColor: Colors.white,
+                expandedHeight: 200,
+                elevation: 20,
+                flexibleSpace: FlexibleSpaceBar(
+                  background: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Obx(
+                              () => Text(
+                                '금연 ${ClockController.to.getDayPlus}일 차',
+                                style: const TextStyle(
+                                    fontSize: 40, fontWeight: FontWeight.bold),
+                              ),
+                            ),
+                            TextButton(
+                              child: const Text('눌러보실?'),
+                              onPressed: () {
+                                Get.to(() => const GamePage());
+                              },
+                            ),
+                            TextButton(
+                              child: const Text('로그아웃'),
+                              onPressed: () {
+                                Get.offAllNamed('/signup');
+                                Hive.box('loginData').delete('key');
+                              },
+                            )
+                          ],
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        const Text('오늘 기분은 어떠세요?')
+                      ],
+                    ),
+                  ),
+                )),
+            SliverToBoxAdapter(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Image.asset('assets/character.png'),
+                  const Clock(),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
