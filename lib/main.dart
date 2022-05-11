@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:stop_smoking/constants.dart';
 
 import 'package:stop_smoking/main_controller.dart';
 import 'package:stop_smoking/models/user.dart';
@@ -35,10 +36,11 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       // * 기본 테마 설정
       theme: ThemeData(
-        primarySwatch: Colors.blueGrey,
+        primarySwatch: mWhite,
         appBarTheme: const AppBarTheme(
+            elevation: 0,
             titleTextStyle: TextStyle(
-                color: Colors.white,
+                color: Colors.black,
                 fontFamily: 'Kangwon',
                 fontSize: 22,
                 fontWeight: FontWeight.bold)),

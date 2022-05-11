@@ -6,6 +6,8 @@ import 'package:stop_smoking/models/user.dart';
 
 class ClockController extends GetxController {
   static ClockController get to => Get.find<ClockController>();
+  // * user 정보 가저오기
+  User user = Hive.box('loginData').get('key');
 
   // * 반응형 변수 선언
   var timeData = TimeData.initilize().obs;
@@ -18,8 +20,6 @@ class ClockController extends GetxController {
   String get getDayPlus => timeData.value.dayPlus.toString();
   // timeData 만들기
   TimeData getTimeMap() {
-    // 계정 정보
-    User user = Hive.box('loginData').get('key');
     Duration diff =
         Duration(seconds: DateTime.now().difference(user.createdAt).inSeconds);
     int days = diff.inDays;
@@ -46,6 +46,13 @@ class ClockController extends GetxController {
 
     int dayPlus = DateTime.now().difference(tempDate).inDays + 1;
     return dayPlus;
+  }
+
+  double getSavedMoney() {
+    int smokingNum = int.parse(user.smokingNum);
+    int dailyCost = smokingNum * 225;
+    double costPerSecond = dailyCost / 86400;
+    return costPerSecond;
   }
 
   @override
