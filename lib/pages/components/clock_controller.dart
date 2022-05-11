@@ -42,7 +42,7 @@ class ClockController extends GetxController {
 
   int putDayPlus(DateTime userDate) {
     DateTime tempDate =
-        DateTime(userDate.year, userDate.month, userDate.day, 23, 59);
+        DateTime(userDate.year, userDate.month, userDate.day, 0, 0);
 
     int dayPlus = DateTime.now().difference(tempDate).inDays + 1;
     return dayPlus;

@@ -34,14 +34,20 @@ class LoginPage extends GetView<LoginController> {
             SizedBox(
               width: Get.width * 0.5,
               child: TextFormField(
-                controller: controller.nameCon,
-                decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Colors.grey.shade200,
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20)),
-                    labelText: '이름'),
-              ),
+                  controller: controller.nameCon,
+                  decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Colors.grey.shade200,
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20)),
+                      labelText: '이름'),
+                  validator: (text) {
+                    if (text == null || text.isEmpty) {
+                      return '값을 입력해주세요';
+                    } else {
+                      return null;
+                    }
+                  }),
             ),
             const SizedBox(
               height: 10,
@@ -56,14 +62,27 @@ class LoginPage extends GetView<LoginController> {
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(20)),
                     labelText: '전화번호 뒷 4자리'),
+                validator: (text) {
+                  if (text == null || text.isEmpty) {
+                    return '값을 입력해주세요';
+                  }
+                  if (int.tryParse(text) == null) {
+                    return '숫자를 입력해주세요';
+                  }
+                  if (text.length != 4) {
+                    return '4자리를 입력해주세요';
+                  }
+                  return null;
+                },
               ),
             ),
             OutlinedButton(
                 onPressed: () {
-                  controller.validateAndLogin(
-                      controller.nameCon.text, controller.passwordCon.text);
+                  if (controller.loginKey.currentState!.validate()) {
+                    controller.getLoginDialog();
+                  }
                 },
-                child: const Text('로그인')),
+                child: const Text('계정확인')),
             const Spacer(
               flex: 3,
             )

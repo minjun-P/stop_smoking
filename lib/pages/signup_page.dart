@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:hive/hive.dart';
 import 'package:stop_smoking/pages/signup_controller.dart';
-
-import '../models/user.dart';
 
 class SignupPage extends GetView<SignupController> {
   const SignupPage({Key? key}) : super(key: key);
@@ -41,21 +38,6 @@ class SignupPage extends GetView<SignupController> {
                 Get.toNamed('/login');
               },
             ),
-            Builder(
-              builder: (context) {
-                User? user = Hive.box('loginData').get('key');
-                if (user == null) {
-                  return const Text('null');
-                }
-                return Column(
-                  children: [
-                    Text(user.id),
-                    Text(user.name),
-                    Text(user.smokingNum)
-                  ],
-                );
-              },
-            )
           ],
         ),
       ),
